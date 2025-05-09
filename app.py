@@ -35,5 +35,5 @@ def scrape_by_date():
     else:
         return jsonify({"error": f"Failed to fetch page. Status code: {response.status_code}"}), 502
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
