@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import os
 
-app = Flask(_name_, static_folder='public')
+app = Flask(__name__, static_folder='public')
 
 @app.route('/')
 def index():
