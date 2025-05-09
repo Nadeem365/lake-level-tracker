@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lake Levels</title>
+</head>
+<body>
+    <h1>Chennai Lake Levels</h1>
+
+    <label for="dateInput">Select Date:</label>
+    <input type="date" id="dateInput" />
+    <button onclick="fetchData()">Load Data</button>
+
+    <table id="lakeTable" style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>RESERVOIR</th>
+                <th>Level (ft)</th>
+                <th>Storage (mcft)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        async function fetchData() {
+   const dateInput = document.getElementById('dateInput').value;
+            if (!dateInput) {
+                alert('Please select a date.');
+                return;
+            }
+
+            const [year, month, day] = dateInput.split('-');
+            const formattedDate = ${day}-${month}-${year};
+
+            try {
+                const response = await fetch('/scrape?date=' + formattedDate);
+                const data = await response.json();
+
+                const tableBody = document.querySelector('#lakeTable tbody');
+                tableBody.innerHTML = '';
+
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.RESERVOIR}</td>
+                        <td>${item['Level (ft)']}</td>
+                  <td>${item['Storage (mcft)']}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+    </script>
+</body>
+</html>
+
