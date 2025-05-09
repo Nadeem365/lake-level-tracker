@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -7,6 +8,7 @@ import json  # Import json module to work with JSON files
 
 # Initialize the Flask app
 app = Flask(__name__, static_folder='public')
+CORS(app)  # This will allow cross-origin requests to your Flask app
 
 @app.route('/')
 def index():

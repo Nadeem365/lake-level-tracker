@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lake Levels</title>
 </head>
 <body>
@@ -20,109 +22,49 @@
         </thead>
         <tbody></tbody>
     </table>
-    async function fetchData() {
-    const dateInput = document.getElementById('dateInput').value;
-    if (!dateInput) {
-        alert('Please select a date.');
-        return;
-    }
 
-    const [year, month, day] = dateInput.split('-');
-    const formattedDate = `${day}-${month}-${year}`;
-
-    try {
-        const response = await fetch('/scrape?date=' + formattedDate);
-        const data = await response.json();
-
-        // Check if the response has an error key
-        if (data.error) {
-            alert('Error: ' + data.error);
-            return;
-        }
-
-        const tableBody = document.querySelector('#lakeTable tbody');
-        tableBody.innerHTML = '';
-
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.RESERVOIR}</td>
-                <td>${item['Level (ft)']}</td>
-                <td>${item['Storage (mcft)']}</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error loading data:', error);
-        alert('Something went wrong. See console for details.');
-    }
-}
-
+    <!-- JavaScript code placed here -->
     <script>
         async function fetchData() {
-   const dateInput = document.getElementById('dateInput').value;
+            const dateInput = document.getElementById('dateInput').value;
             if (!dateInput) {
                 alert('Please select a date.');
                 return;
             }
 
+            // Convert the date format (yyyy-mm-dd to dd-mm-yyyy)
             const [year, month, day] = dateInput.split('-');
-            const formattedDate = ${day}-${month}-${year};
+            const formattedDate = `${day}-${month}-${year}`;
 
             try {
                 const response = await fetch('/scrape?date=' + formattedDate);
                 const data = await response.json();
 
-                const tableBody = document.querySelector('#lakeTable tbody');
-                tableBody.innerHTML = '';
+                // Check if the response has an error key
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
 
+                // Clear the table before appending new data
+                const tableBody = document.querySelector('#lakeTable tbody');
+                tableBody.innerHTML = '';  // Clear previous data
+
+                // Loop through data and populate the table
                 data.forEach(item => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${item.RESERVOIR}</td>
                         <td>${item['Level (ft)']}</td>
-                  <td>${item['Storage (mcft)']}</td>
+                        <td>${item['Storage (mcft)']}</td>
                     `;
                     tableBody.appendChild(row);
                 });
             } catch (error) {
                 console.error('Error loading data:', error);
+                alert('Something went wrong. See console for details.');
             }
-            async function fetchData() {
-    const dateInput = document.getElementById('dateInput').value;
-    if (!dateInput) {
-        alert('Please select a date.');
-        return;
-    }
-
-    const [year, month, day] = dateInput.split('-');
-    const formattedDate = `${day}-${month}-${year}`;
-
-    try {
-        console.log('Fetching data for date:', formattedDate);  // Debugging line
-        const response = await fetch('/scrape?date=' + formattedDate);
-        const data = await response.json();
-        console.log('Received data:', data);  // Debugging line
-
-        const tableBody = document.querySelector('#lakeTable tbody');
-        tableBody.innerHTML = '';
-
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.RESERVOIR}</td>
-                <td>${item['Level (ft)']}</td>
-                <td>${item['Storage (mcft)']}</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error loading data:', error);
-    }
-}
-
         }
     </script>
 </body>
 </html>
-
