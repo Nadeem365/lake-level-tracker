@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os
+import json  # Import json module to work with JSON files
 
 app = Flask(__name__, static_folder='public')
 
@@ -29,6 +30,11 @@ def scrape_by_date():
             table = soup.find('table')
             df = pd.read_html(str(table))[0]
             data = df.to_dict(orient='records')
+
+            # Write the fetched data to data.json
+            with open('public/data.json', 'w') as json_file:
+                json.dump(data, json_file, indent=4)
+
             return jsonify(data)
         except Exception as e:
             return jsonify({"error": f"Failed to parse data: {str(e)}"}), 500
